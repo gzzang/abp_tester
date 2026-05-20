@@ -1,0 +1,13 @@
+{
+  "culture": "zh-Hans",
+  "texts": {
+    "AppName": "DddDemo",
+    "Menu:Home": "首页",
+    "Welcome": "欢迎",
+    "LongWelcomeMessage": "欢迎使用本应用程序。这是一个基于 ABP 框架的启动项目。更多信息，请访问 abp.io。",
+    "Permission:Orders": "订单管理",
+    "Permission:Orders.Create": "创建订单",
+    "Permission:Orders.Update": "更新订单",
+    "Permission:Orders.Delete": "删除订单"
+  }
+}

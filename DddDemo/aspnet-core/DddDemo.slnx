@@ -1,0 +1,20 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/DddDemo.Application.Contracts/DddDemo.Application.Contracts.csproj" />
+    <Project Path="src/DddDemo.Application/DddDemo.Application.csproj" />
+    <Project Path="src/DddDemo.DbMigrator/DddDemo.DbMigrator.csproj" />
+    <Project Path="src/DddDemo.Domain.Shared/DddDemo.Domain.Shared.csproj" />
+    <Project Path="src/DddDemo.Domain/DddDemo.Domain.csproj" />
+    <Project Path="src/DddDemo.EntityFrameworkCore/DddDemo.EntityFrameworkCore.csproj" />
+    <Project Path="src/DddDemo.HttpApi.Client/DddDemo.HttpApi.Client.csproj" />
+    <Project Path="src/DddDemo.HttpApi.Host/DddDemo.HttpApi.Host.csproj" />
+    <Project Path="src/DddDemo.HttpApi/DddDemo.HttpApi.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/DddDemo.Application.Tests/DddDemo.Application.Tests.csproj" />
+    <Project Path="test/DddDemo.Domain.Tests/DddDemo.Domain.Tests.csproj" />
+    <Project Path="test/DddDemo.EntityFrameworkCore.Tests/DddDemo.EntityFrameworkCore.Tests.csproj" />
+    <Project Path="test/DddDemo.HttpApi.Client.ConsoleTestApp/DddDemo.HttpApi.Client.ConsoleTestApp.csproj" />
+    <Project Path="test/DddDemo.TestBase/DddDemo.TestBase.csproj" />
+  </Folder>
+</Solution>

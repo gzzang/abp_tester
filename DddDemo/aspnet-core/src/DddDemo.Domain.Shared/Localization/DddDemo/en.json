@@ -1,0 +1,13 @@
+{
+  "culture": "en",
+  "texts": {
+    "AppName": "DddDemo",
+    "Menu:Home": "Home",
+    "Welcome": "Welcome",
+    "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
+    "Permission:Orders": "Orders",
+    "Permission:Orders.Create": "Create Order",
+    "Permission:Orders.Update": "Update Order",
+    "Permission:Orders.Delete": "Delete Order"
+  }
+}
