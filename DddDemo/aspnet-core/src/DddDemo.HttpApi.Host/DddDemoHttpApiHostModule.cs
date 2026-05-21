@@ -193,7 +193,6 @@ public class DddDemoHttpApiHostModule : AbpModule
         }
 
         app.UseCorrelationId();
-        app.MapAbpStaticAssets();
         app.UseRouting();
         app.UseCors();
         app.UseAuthentication();

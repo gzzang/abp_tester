@@ -35,16 +35,10 @@ jobs:
     - name: 发布项目（生成可执行文件）
       run: dotnet publish $env:HOST_PROJECT_PATH -c Release -o $env:PUBLISH_DIR --no-build
 
-    - name: 部署到本地文件夹（示例）
+    - name: 构建 Docker 镜像
       run: |
-        Remove-Item -Path C:\deploy\myapp -Recurse -Force -ErrorAction SilentlyContinue
-        Copy-Item -Path $env:PUBLISH_DIR -Destination C:\deploy\myapp -Recurse -Force
+        docker build -t ddddemo-web:latest -f DddDemo/aspnet-core/src/DddDemo.HttpApi.Host/Dockerfile DddDemo/aspnet-core
 
-    # 可选：部署到本地 IIS
-    - name: 部署到本地 IIS
-      if: success()
+    - name: 启动/重启 docker compose
       run: |
-        Import-Module WebAdministration
-        Stop-WebSite -Name "MyWebSite"
-        Copy-Item "$env:PUBLISH_DIR/*" C:\inetpub\wwwroot\MyWebSite -Recurse -Force
-        Start-WebSite -Name "MyWebSite"
+        docker compose -f DddDemo/docker-compose.yml up -d --remove-orphans

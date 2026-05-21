@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:16-alpine
@@ -9,7 +7,7 @@ services:
       POSTGRES_PASSWORD: zz123123
       POSTGRES_DB: DddDemo
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
@@ -19,6 +17,28 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  web:
+    image: ddddemo-web:latest
+    build:
+      context: ./aspnet-core
+      dockerfile: src/DddDemo.HttpApi.Host/Dockerfile
+    container_name: ddddemo-web
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:5000
+      - AbpMvcLibs__CheckLibs=false
+      - ConnectionStrings__Default=Host=postgres;Port=5432;Database=DddDemo;User ID=gzzang;Password=zz123123;
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./aspnet-core/src/DddDemo.HttpApi.Host/wwwroot/libs:/app/wwwroot/libs
+    networks:
+      - ddddemo-network
+    restart: always
 
   redis:
     image: redis:7-alpine
