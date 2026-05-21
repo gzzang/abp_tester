@@ -1,0 +1,50 @@
+name: .NET 本地自动 CI/CD
+
+on:
+  push:         # 代码推送自动触发
+    branches: [ main ]
+  workflow_dispatch:  # 支持手动触发
+
+# 只在本地自托管 Runner 运行
+jobs:
+  build-deploy:
+    runs-on: self-hosted  # 关键：本地运行
+    env:
+      SOLUTION_PATH: DddDemo/aspnet-core/DddDemo.slnx
+      HOST_PROJECT_PATH: DddDemo/aspnet-core/src/DddDemo.HttpApi.Host/DddDemo.HttpApi.Host.csproj
+      PUBLISH_DIR: DddDemo/aspnet-core/publish
+
+    steps:
+    - name: 拉取最新代码
+      uses: actions/checkout@v4
+
+    - name: 设置 .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.0.201
+
+    - name: 安装依赖
+      run: dotnet restore $env:SOLUTION_PATH
+
+    - name: 构建项目（Release）
+      run: dotnet build $env:SOLUTION_PATH --configuration Release --no-restore
+
+    - name: 运行单元测试
+      run: dotnet test $env:SOLUTION_PATH --configuration Release --no-build --verbosity normal
+
+    - name: 发布项目（生成可执行文件）
+      run: dotnet publish $env:HOST_PROJECT_PATH -c Release -o $env:PUBLISH_DIR --no-build
+
+    - name: 部署到本地文件夹（示例）
+      run: |
+        Remove-Item -Path C:\deploy\myapp -Recurse -Force -ErrorAction SilentlyContinue
+        Copy-Item -Path $env:PUBLISH_DIR -Destination C:\deploy\myapp -Recurse -Force
+
+    # 可选：部署到本地 IIS
+    - name: 部署到本地 IIS
+      if: success()
+      run: |
+        Import-Module WebAdministration
+        Stop-WebSite -Name "MyWebSite"
+        Copy-Item "$env:PUBLISH_DIR/*" C:\inetpub\wwwroot\MyWebSite -Recurse -Force
+        Start-WebSite -Name "MyWebSite"
